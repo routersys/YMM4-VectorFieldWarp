@@ -64,24 +64,30 @@ jobs:
           echo "TAG=$tag" >> $env:GITHUB_OUTPUT
           echo "VERSION=$($tag.TrimStart('v'))" >> $env:GITHUB_OUTPUT
 
-      - name: プロジェクトのビルド
+      - name: resx ファイルの生成（初回ビルド）
         shell: pwsh
-        env:
-          CI: 'true'
         run: |
-          dotnet publish VectorFieldWarp/VectorFieldWarp.csproj `
+          dotnet build VectorFieldWarp/VectorFieldWarp.csproj `
             -c Release `
             -p:YMM4DirPath="${{ steps.ymm4.outputs.YMM4_DIR }}" `
             -p:FxcPath="${{ steps.fxc.outputs.FXC_PATH }}" `
-            -p:Platform=x64 `
-            --output publish-output
+            -p:Platform=x64
+
+      - name: プロジェクトのビルド
+        shell: pwsh
+        run: |
+          dotnet build VectorFieldWarp/VectorFieldWarp.csproj `
+            -c Release `
+            -p:YMM4DirPath="${{ steps.ymm4.outputs.YMM4_DIR }}" `
+            -p:FxcPath="${{ steps.fxc.outputs.FXC_PATH }}" `
+            -p:Platform=x64
 
       - name: パッケージの作成
         id: package
         shell: pwsh
         run: |
           $version   = "${{ steps.version.outputs.TAG }}"
-          $outDir    = "publish-output"
+          $outDir    = "VectorFieldWarp/bin/x64/Release/net10.0-windows10.0.19041.0"
           $stageRoot = "stage/VectorFieldWarp"
           $pkgName   = "VectorFieldWarp_$version.ymme"
 
