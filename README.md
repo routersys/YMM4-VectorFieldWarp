@@ -9,6 +9,8 @@
 YukkuriMovieMaker4（YMM4）上で動作する、**制御点が生成する放射場と渦場によってピクセルを変位させる映像エフェクトプラグイン**です。
 制御点ごとに放射強度・渦強度・影響半径を独立して設定でき、複数の制御点を組み合わせることで複雑なベクトル場を構成できます。各制御点はアニメーション対応のパラメータを持ち、プレビュー画面上でのドラッグ操作による直接編集にも対応しています。
 
+![Image](https://github.com/routersys/YMM4-VectorFieldWarp/blob/main/docs/VectorFieldWarp.png)
+
 ---
 
 ## 目次
