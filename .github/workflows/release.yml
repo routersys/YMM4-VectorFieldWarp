@@ -69,18 +69,19 @@ jobs:
         env:
           CI: 'true'
         run: |
-          dotnet build VectorFieldWarp/VectorFieldWarp.csproj `
+          dotnet publish VectorFieldWarp/VectorFieldWarp.csproj `
             -c Release `
             -p:YMM4DirPath="${{ steps.ymm4.outputs.YMM4_DIR }}" `
             -p:FxcPath="${{ steps.fxc.outputs.FXC_PATH }}" `
-            -p:Platform=x64
+            -p:Platform=x64 `
+            --output publish-output
 
       - name: パッケージの作成
         id: package
         shell: pwsh
         run: |
           $version   = "${{ steps.version.outputs.TAG }}"
-          $outDir    = "VectorFieldWarp/bin/x64/Release/net10.0-windows10.0.19041.0"
+          $outDir    = "publish-output"
           $stageRoot = "stage/VectorFieldWarp"
           $pkgName   = "VectorFieldWarp_$version.ymme"
 
